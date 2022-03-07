@@ -12,11 +12,27 @@ FROM jupyter/base-notebook:latest
 USER root
 RUN apt-get update \
  && apt-get upgrade -y \
+ && apt-get install -y curl \
+ && curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
+ && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null \
+ && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list \
  && apt-get install -y --no-install-recommends \
         dnsutils \
         git \
         iputils-ping \
+        nodejs \
+        yarn \
+        gcc \
+        g++ \
+        make \
+        pkg-config \
+        libsecret-1-dev \
  && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt/theia
+COPY package.json /opt/theia/package.json
+RUN cd /opt/theia && yarn && yarn theia build
+
 USER $NB_USER
 
 COPY requirements.txt /tmp/requirements.txt
@@ -36,4 +52,5 @@ RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
 
-# conda/pip/apt install additional packages here, if desired.
+# Put theia on the PATH
+ENV PATH /opt/theia/nodeodules/.bin:$PATH
