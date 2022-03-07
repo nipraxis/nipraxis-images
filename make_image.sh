@@ -12,8 +12,13 @@ fi
 
 name=$(basename $(realpath $pth))
 tag=$(git rev-parse --short HEAD)
-user=matthew-brett
+user=matthewbrett
 img_name="${name}:${tag}"
 full_name="${user}/${img_name}"
 
 docker build -t ${full_name} ${pth}
+
+echo "To deploy:"
+echo
+echo "docker login --username=$user"
+echo "docker push ${full_name}"
