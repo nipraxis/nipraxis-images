@@ -50,8 +50,15 @@ RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
 RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
 RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 
+RUN cd /tmp \
+  && git clone https://github.com/jupyterhub/jupyter-server-proxy \
+  && cd jupyter-server-proxy \
+  && git checkout v3.2.1 \
+  && cd contrib/theia \
+  && pip install .
+
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
 
 # Put theia on the PATH
-ENV PATH /opt/theia/nodeodules/.bin:$PATH
+ENV PATH /opt/theia/node_modules/.bin:$PATH
