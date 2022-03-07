@@ -15,3 +15,5 @@ okpy
 dipy
 fury<0.8  # pacify dipy imports
 scikit-image
+
+jupyter-server-proxy
