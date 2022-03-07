@@ -30,8 +30,9 @@ RUN apt-get update \
         libsecret-1-dev \
  && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /opt/theia
+RUN mkdir -p /opt/theia/bin
 COPY package.json /opt/theia/package.json
+COPY theia-bin /opt/theia/bin/theia
 RUN cd /opt/theia && yarn && yarn theia build
 
 USER $NB_USER
@@ -60,5 +61,5 @@ RUN cd /tmp \
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
 
-# Put theia on the PATH
-ENV PATH /opt/theia/node_modules/.bin:$PATH
+# Put theia binary wrapper on the PATH
+ENV PATH /opt/theia/bin:$PATH
