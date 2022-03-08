@@ -12,4 +12,4 @@ fi
 start_path=$(realpath $1)
 shift
 my_dir=$(dirname "${BASH_SOURCE[0]}")
-(cd $my_dir/.. && ./node_modules/.bin/theia start $start_path $*)
+(cd $my_dir/.. && ./node_modules/.bin/theia start $start_path $* &)
