@@ -52,9 +52,9 @@ RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
 RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 
 RUN cd /tmp \
-  && git clone https://github.com/jupyterhub/jupyter-server-proxy \
+  && git clone https://github.com/matthew-brett/jupyter-server-proxy \
   && cd jupyter-server-proxy \
-  && git checkout v3.2.1 \
+  && git checkout theia-futz \
   && cd contrib/theia \
   && pip install .
 
