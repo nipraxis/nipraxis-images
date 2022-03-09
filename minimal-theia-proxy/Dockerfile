@@ -48,7 +48,6 @@ RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
         pip install --no-cache-dir $PIP_OVERRIDES; \
     fi
 
-RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
 RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 
 RUN cd /tmp \
