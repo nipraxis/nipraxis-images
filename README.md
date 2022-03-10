@@ -2,37 +2,21 @@
 
 ## Build the image locally
 
-```
-docker build -t matthewbrett/nipraxis:v002 .
-```
-
-## Google Container Registry
-
-See <https://www.cloudsavvyit.com/4866/how-to-push-and-pull-docker-images-from-google-container-registry/>.
-
-Enable GCR for project via
-<https://console.cloud.google.com/apis/library/containerregistry.googleapis.com>.
-
-Configure docker with gcloud:
-
-```
-gcloud auth configure-docker
+```bash
+# Choose your directory containing a Dockerfile
+cd nipraxis-hub
+../make_image.sh .
 ```
 
-Tag and push to GCR:
+This will tag the resulting image with the first 7 characters of the commit from this repository.
 
-```
-docker tag matthewbrett/nipraxis:v002 gcr.io/uob-jupyterhub/nipraxis:v002
-docker push gcr.io/uob-jupyterhub/nipraxis:v002
-```
+## Push to docker hub
 
-## Dockerhub
+The output from `make_image.sh` above will give you the commands, but, say your generated docker image is `matthewbrett/nipraxis-hub:123abcd`.  Then:
 
-The image can be pushed up to dockerhub directly::
-
-```
-docker login --username=matthewbrett
-docker push matthewbrett/nipraxis:001
+```bash
+docker login --username matthewbrett
+docker push matthewbrett/nipraxis-hub:123abcd
 ```
 
 If you get a "User interaction is not allowed." error at the ``login`` stage,
