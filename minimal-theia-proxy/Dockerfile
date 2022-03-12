@@ -10,6 +10,9 @@ FROM jupyter/base-notebook:latest
 # Example install of git and nbgitpuller.
 # NOTE: git is already available in the jupyter/minimal-notebook image.
 USER root
+
+RUN conda uninstall -y nodejs
+
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y curl \
