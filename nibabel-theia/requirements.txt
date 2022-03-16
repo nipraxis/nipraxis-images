@@ -9,11 +9,11 @@ jupyterhub==2.2.0
 nbgitpuller==1.0.2
 jupyterlab==3.3.2
 
-scipy
-matplotlib
-nibabel
-jupytext
-okpy
-scikit-image
+# scipy
+# matplotlib
+# nibabel
+# jupytext
+# okpy
+# scikit-image
 
 jupyter-server-proxy
