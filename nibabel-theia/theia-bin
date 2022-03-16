@@ -18,4 +18,4 @@ THEIA_DIR=$(realpath "${SCRIPT_DIR}/..")
 export THEIA_DEFAULT_PLUGINS="local-dir:${THEIA_DIR}/plugins"
 export USE_LOCAL_GIT=true
 
-node "${THEIA_DIR}/src-gen/backend/main.js" $start_path $*
+(cd ${THEIA_DIR} && node "${THEIA_DIR}/src-gen/backend/main.js" $start_path $*)

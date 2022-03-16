@@ -22,7 +22,7 @@ USER root
 
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY build_scripts/install_node.sh build_scripts/build_theia.sh /build_scripts/
+COPY build_scripts/install_node.sh /build_scripts/
 RUN /build_scripts/install_node.sh
 
 # Install all OS dependencies for notebook server that starts but lacks all
@@ -42,11 +42,6 @@ RUN apt-get update \
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
-
-WORKDIR /home/theia
-ADD package.json ./package.json
-RUN /build_scripts/build_theia.sh
-COPY theia-bin /home/theia/bin/theia
 
 # Configure environment
 ENV SHELL=/bin/bash \
@@ -113,6 +108,11 @@ RUN git clone https://github.com/jupyterhub/jupyter-server-proxy \
   && cd contrib/theia \
   && pip install .
 
+WORKDIR /home/theia
+COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
+ADD package.json ./package.json
+RUN ./build_scripts/build_theia.sh
+COPY theia-bin /home/theia/bin/theia
 
 EXPOSE 8888
 
