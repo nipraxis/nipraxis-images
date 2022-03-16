@@ -13,15 +13,19 @@ USER root
 
 RUN conda uninstall -y nodejs
 
-COPY build_scripts/install_node.sh build_scripts/build_theia.sh /build_scripts/
+COPY build_scripts/install_node.sh /build_scripts/
 RUN /build_scripts/install_node.sh
 
-WORKDIR /home/theia
-COPY package.json ./package.json
-COPY theia-bin ./bin/theia
-RUN /build_scripts/build_theia.sh
+RUN mkdir /opt/theia \
+  && chown $NB_UID:$NB_GID /opt/theia
 
 USER $NB_USER
+
+WORKDIR /opt/theia
+COPY package.json ./package.json
+COPY theia-bin ./bin/theia
+COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
+RUN ./build_scripts/build_theia.sh
 
 COPY requirements.txt /tmp/requirements.txt
 RUN python -m pip install --no-cache-dir \
