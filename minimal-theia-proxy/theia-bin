@@ -1,5 +1,5 @@
 #!/bin/bash
-# Exit theia from its own root directory.
+# Exec theia from its own root directory.
 if [ "$1" != "start" ]; then
     echo '"start" must be the first argument'
     exit 1
@@ -11,5 +11,11 @@ if [ -z "$1" ]; then
 fi
 start_path=$(realpath $1)
 shift
-my_dir=$(dirname "${BASH_SOURCE[0]}")
-( cd $my_dir/.. && ./node_modules/.bin/theia start $start_path $* )
+
+SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+THEIA_DIR=$(realpath "${SCRIPT_DIR}/..")
+
+export THEIA_DEFAULT_PLUGINS="local-dir:${THEIA_DIR}/plugins"
+export USE_LOCAL_GIT=true
+
+node "${THEIA_DIR}/src-gen/backend/main.js" $start_path $*
