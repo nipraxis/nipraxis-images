@@ -46,4 +46,4 @@ RUN cd /tmp \
 #ENV NBGITPULLER_APP=lab
 
 # Put theia binary wrapper on the PATH
-ENV PATH /opt/theia/bin:$PATH
+ENV PATH /home/theia/bin:$PATH
