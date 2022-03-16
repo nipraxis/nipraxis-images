@@ -1,0 +1,19 @@
+# Check the Helm chart version for the JupyterHub instances.
+# Then check at
+# https://jupyterhub.github.io/helm-chart/#development-releases-jupyterhub
+# for the corresponding jupyterhub release - e.g. 2.1.1.
+# Make sure that version matches below.
+
+notebook==6.1.4
+jupyterhub==2.2.0
+nbgitpuller==1.0.2
+jupyterlab==3.3.2
+
+scipy
+matplotlib
+nibabel
+jupytext
+okpy
+scikit-image
+
+jupyter-server-proxy
