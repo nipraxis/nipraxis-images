@@ -103,16 +103,17 @@ RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
 
 RUN jupyter serverextension enable --py jupyter_server_proxy
 
-RUN git clone https://github.com/jupyterhub/jupyter-server-proxy \
-  && cd jupyter-server-proxy \
-  && cd contrib/theia \
-  && pip install .
-
 WORKDIR /home/theia
 COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
 RUN ./build_scripts/build_theia.sh
 COPY theia-bin /home/theia/bin/theia
+
+RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
+  && cd jupyter-server-proxy \
+  && git checkout theia-futz \
+  && cd contrib/theia \
+  && pip install .
 
 EXPOSE 8888
 
