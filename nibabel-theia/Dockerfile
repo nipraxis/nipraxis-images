@@ -21,6 +21,8 @@ RUN apt-get update \
 COPY build_scripts/install_node.sh /build_scripts/
 RUN /build_scripts/install_node.sh $NODE_VERSION
 
+RUN pip install jupyter-server-proxy
+
 USER $NB_USER
 
 RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
@@ -33,14 +35,14 @@ RUN ./build_scripts/build_theia.sh
 COPY theia-bin /home/theia/bin/theia
 
 COPY requirements.txt /tmp/requirements.txt
-RUN python -m pip install --no-cache-dir \
+RUN python -m pip install --user --no-cache-dir \
     -r /tmp/requirements.txt
 
 # Support overriding a package or two through passed docker --build-args.
 # ARG PIP_OVERRIDES="jupyterhub==1.3.0"
 ARG PIP_OVERRIDES=
 RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
-        pip install --no-cache-dir $PIP_OVERRIDES; \
+        pip install --user --no-cache-dir $PIP_OVERRIDES; \
     fi
 
 RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
