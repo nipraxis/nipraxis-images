@@ -4,15 +4,5 @@
 # for the corresponding jupyterhub release - e.g. 2.1.1.
 # Make sure that version matches below.
 
-notebook==6.1.4
-nbgitpuller==1.0.2
-jupyterlab==3.3.2
-
-scipy
-matplotlib
-nibabel
-jupytext
-okpy
-scikit-image
-nipraxis>=0.3.2
-dipy
+jupyterhub==2.2.0
+jupyter-server-proxy

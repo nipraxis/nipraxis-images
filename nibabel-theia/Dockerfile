@@ -79,6 +79,11 @@ ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
+WORKDIR /tmp
+COPY root_requirements.txt ./root_requirements.txt
+RUN pip3 install --upgrade pip \
+    && pip3 install --no-cache-dir -r root_requirements.txt
+
 USER $NB_UID
 WORKDIR $HOME
 
@@ -91,8 +96,7 @@ ENV PATH $HOME/.local/bin:/home/theia/bin:$PATH
 
 WORKDIR /tmp
 COPY requirements.txt ./requirements.txt
-RUN pip3 install --upgrade pip --user \
-    && pip3 install --user --no-cache-dir python-language-server flake8 autopep8 pylint \
+RUN pip3 install --user --no-cache-dir python-language-server flake8 autopep8 pylint \
     && pip3 install --user --no-cache-dir -r requirements.txt
 
 # Support overriding a package or two through passed docker --build-args.
