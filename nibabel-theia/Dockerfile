@@ -14,6 +14,7 @@ LABEL maintainer="Nipraxis project <https://nipraxis.org>"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+ARG NODE_VERSION="12.x"
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -23,7 +24,7 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 
 COPY build_scripts/install_node.sh /build_scripts/
-RUN /build_scripts/install_node.sh
+RUN /build_scripts/install_node.sh $NODE_VERSION
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -103,6 +104,7 @@ RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
 
 RUN jupyter serverextension enable --py jupyter_server_proxy
 
+ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 WORKDIR /home/theia
 COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
@@ -134,5 +136,8 @@ USER $NB_UID
 
 # Make python from python3
 RUN ln -s $(which python3) ~/.local/bin/python
-RUN pip install --user "jupyterlab==2.2.8"
+
+# Point Nipraxis to read-only cache
+ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
+
 WORKDIR $HOME
