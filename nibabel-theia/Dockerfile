@@ -84,6 +84,8 @@ COPY root_requirements.txt ./root_requirements.txt
 RUN pip3 install --upgrade pip \
     && pip3 install --no-cache-dir -r root_requirements.txt
 
+RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
+
 USER $NB_UID
 WORKDIR $HOME
 
@@ -105,8 +107,6 @@ ARG PIP_OVERRIDES=
 RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
         pip install --no-cache-dir $PIP_OVERRIDES; \
     fi
-
-RUN jupyter serverextension enable --py jupyter_server_proxy
 
 # ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 WORKDIR /home/theia
