@@ -34,6 +34,8 @@ COPY requirements.txt /tmp/requirements.txt
 RUN python -m pip install --no-cache-dir \
     -r /tmp/requirements.txt
 
+RUN conda uninstall -y nodejs
+
 # Support overriding a package or two through passed docker --build-args.
 # ARG PIP_OVERRIDES="jupyterhub==1.3.0"
 ARG PIP_OVERRIDES=
