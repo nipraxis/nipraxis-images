@@ -65,3 +65,6 @@ RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
 WORKDIR $HOME
 
 ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
+
+# Put before pip install
+ENV PATH $HOME/.local/bin:/home/theia/bin:$PATH
