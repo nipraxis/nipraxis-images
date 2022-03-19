@@ -35,6 +35,6 @@ RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
 
-ENV NIPRAXIS_STAGING_CACHE=$NB_USER/shared/data
+ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
 
 # conda/pip/apt install additional packages here, if desired.
