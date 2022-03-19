@@ -104,7 +104,7 @@ RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
 
 RUN jupyter serverextension enable --py jupyter_server_proxy
 
-ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
+# ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 WORKDIR /home/theia
 COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
