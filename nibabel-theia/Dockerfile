@@ -18,34 +18,31 @@ RUN apt-get update \
         iputils-ping \
  && rm -rf /var/lib/apt/lists/*
 
+ARG NODE_VERSION=12.x
 COPY build_scripts/install_node.sh /build_scripts/
 RUN /build_scripts/install_node.sh $NODE_VERSION
 
-RUN pip install jupyter-server-proxy
-
 USER $NB_USER
 
-RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
-
 WORKDIR /home/theia
-RUN conda uninstall -y nodejs
 COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
 RUN ./build_scripts/build_theia.sh
 COPY theia-bin /home/theia/bin/theia
 
 COPY requirements.txt /tmp/requirements.txt
-RUN python -m pip install --user --no-cache-dir \
+RUN python -m pip install --no-cache-dir \
     -r /tmp/requirements.txt
 
 # Support overriding a package or two through passed docker --build-args.
 # ARG PIP_OVERRIDES="jupyterhub==1.3.0"
 ARG PIP_OVERRIDES=
 RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
-        pip install --user --no-cache-dir $PIP_OVERRIDES; \
+        pip install --no-cache-dir $PIP_OVERRIDES; \
     fi
 
 RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
+RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
@@ -65,6 +62,3 @@ RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
 WORKDIR $HOME
 
 ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
-
-# Put before pip install
-ENV PATH $HOME/.local/bin:/home/theia/bin:$PATH
