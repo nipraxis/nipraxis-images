@@ -4,9 +4,15 @@
         "frontend": {
             "config": {
                 "applicationName": "Theia Python Example",
+                "warnOnPotentiallyInsecureHostPattern": false,
                 "preferences": {
                     "files.enableTrash": false
                 }
+            }
+        },
+        "backend": {
+            "config": {
+                "warnOnPotentiallyInsecureHostPattern": false
             }
         }
     },

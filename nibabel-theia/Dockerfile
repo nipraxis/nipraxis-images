@@ -24,17 +24,9 @@ RUN /build_scripts/install_node.sh $NODE_VERSION
 
 USER $NB_USER
 
-WORKDIR /home/theia
-COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
-ADD package.json ./package.json
-RUN ./build_scripts/build_theia.sh
-COPY theia-bin /home/theia/bin/theia
-
 COPY requirements.txt /tmp/requirements.txt
 RUN python -m pip install --no-cache-dir \
     -r /tmp/requirements.txt
-
-RUN conda uninstall -y nodejs
 
 # Support overriding a package or two through passed docker --build-args.
 # ARG PIP_OVERRIDES="jupyterhub==1.3.0"
@@ -49,9 +41,14 @@ RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
 
-ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
-
+# Install Theia
+RUN conda uninstall -y nodejs
 WORKDIR /home/theia
+COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
+ADD package.json ./package.json
+RUN ./build_scripts/build_theia.sh
+COPY theia-bin /home/theia/bin/theia
+
 # Theia proxy
 RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
   && cd jupyter-server-proxy \
@@ -62,5 +59,7 @@ RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
 # conda/pip/apt install additional packages here, if desired.
 
 WORKDIR $HOME
+
+ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
 
 ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
