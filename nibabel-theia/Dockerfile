@@ -48,6 +48,7 @@ COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
 RUN ./build_scripts/build_theia.sh
 COPY theia-bin /home/theia/bin/theia
+ENV PATH /home/theia/bin:$PATH
 
 # Theia proxy
 RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
