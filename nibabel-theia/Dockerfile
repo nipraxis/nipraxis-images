@@ -41,6 +41,10 @@ RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 #ENV NBGITPULLER_APP=lab
 
 # Install Theia
+USER root
+RUN mkdir /home/theia && chown $NB_UID:$NB_GID /home/theia
+USER $NB_USER
+
 WORKDIR /home/theia
 COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
