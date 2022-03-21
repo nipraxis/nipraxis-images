@@ -14,13 +14,11 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
         dnsutils \
-        git \
         iputils-ping \
  && rm -rf /var/lib/apt/lists/*
 
-ARG NODE_VERSION=12.x
-COPY build_scripts/install_node.sh /build_scripts/
-RUN /build_scripts/install_node.sh $NODE_VERSION
+COPY build_scripts/install_node_conda.sh /build_scripts/
+RUN /build_scripts/install_node_conda.sh
 
 USER $NB_USER
 
@@ -42,7 +40,6 @@ RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 #ENV NBGITPULLER_APP=lab
 
 # Install Theia
-# RUN conda uninstall -y nodejs
 WORKDIR /home/theia
 COPY build_scripts/build_theia.sh ./build_scripts/build_theia.sh
 ADD package.json ./package.json
