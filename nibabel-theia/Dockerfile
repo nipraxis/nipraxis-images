@@ -14,6 +14,7 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
         dnsutils \
+        git \
         iputils-ping \
  && rm -rf /var/lib/apt/lists/*
 
