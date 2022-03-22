@@ -8,6 +8,7 @@
                 "preferences": {
                     "files.enableTrash": false,
                     "terminal.integrated.inheritEnv": false,
+                    "python.defaultInterpreterPath": "/opt/conda/bin/python",
                     "python.dataScience.sendSelectionToInteractiveWindow": true,
                     "python.dataScience.interactiveWindowMode": "perFile",
                     "python.linting.pylintEnabled": true,
