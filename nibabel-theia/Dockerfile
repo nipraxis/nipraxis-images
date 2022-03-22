@@ -16,6 +16,8 @@ RUN apt-get update \
         dnsutils \
         git \
         iputils-ping \
+        vim-nox \
+        less \
  && rm -rf /var/lib/apt/lists/*
 
 COPY build_scripts/install_node_conda.sh /build_scripts/
@@ -53,16 +55,16 @@ COPY theia-bin /home/theia/bin/theia
 ENV PATH /home/theia/bin:$PATH
 
 # Theia proxy
-RUN git clone https://github.com/matthew-brett/jupyter-server-proxy \
+RUN git clone https://github.com/jupyterhub/jupyter-server-proxy \
   && cd jupyter-server-proxy \
-  && git checkout theia-futz \
   && cd contrib/theia \
   && pip install .
 
 # conda/pip/apt install additional packages here, if desired.
+# For Theia
+RUN pip install pylint
+ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 
 WORKDIR $HOME
 
 ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
-
-ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}

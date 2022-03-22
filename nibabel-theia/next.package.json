@@ -3,10 +3,15 @@
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Theia Python Example",
+                "applicationName": "Theia Nipraxis Editor",
                 "warnOnPotentiallyInsecureHostPattern": false,
                 "preferences": {
-                    "files.enableTrash": false
+                    "files.enableTrash": false,
+                    "terminal.integrated.inheritEnv": false,
+                    "python.dataScience.sendSelectionToInteractiveWindow": true,
+                    "python.dataScience.interactiveWindowMode": "perFile",
+                    "python.linting.pylintEnabled": true,
+                    "python.linting.enabled": true
                 }
             }
         },
