@@ -10,6 +10,7 @@ nbgitpuller==1.0.2
 
 scipy
 matplotlib
+pandas
 nibabel
 jupytext
 okpy
