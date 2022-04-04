@@ -68,3 +68,5 @@ ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 WORKDIR $HOME
 
 ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
+
+RUN pip install -U nipraxis
