@@ -1,5 +1,5 @@
 #!/bin/bash
 # After push, add tag from first 7 chars of source cmmit.
 SOURCE_SHORT_SHA="${SOURCE_COMMIT:0:7}"
-docker tag $IMAGE_NAME $DOCKER_REPO:$SOURCE_SOURCE_SHA
-docker push $DOCKER_REPO:$SOURCE_SOURCE_SHA
+docker tag $IMAGE_NAME $DOCKER_REPO:$SOURCE_SHORT_SHA
+docker push $DOCKER_REPO:$SOURCE_SHORT_SHA
