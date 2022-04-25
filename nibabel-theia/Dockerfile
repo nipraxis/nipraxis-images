@@ -17,6 +17,9 @@ RUN apt-get update \
         git \
         iputils-ping \
         vim-nox \
+        nano \
+        jed \
+        ne \
         less \
  && rm -rf /var/lib/apt/lists/*
 
