@@ -18,5 +18,6 @@ dipy
 fury<0.8  # pacify dipy imports
 scikit-image
 nipraxis>=0.3.2
+pytest
 
 jupyter-server-proxy
