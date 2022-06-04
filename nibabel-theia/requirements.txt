@@ -18,7 +18,7 @@ dipy
 fury<0.8  # pacify dipy imports
 scikit-image
 sympy
-nipraxis>=0.3.4
+nipraxis>=0.3.5
 pytest
 
 jupyter-server-proxy
