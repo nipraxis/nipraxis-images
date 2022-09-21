@@ -26,6 +26,10 @@ RUN apt-get update \
 COPY build_scripts/install_node_conda.sh /build_scripts/
 RUN /build_scripts/install_node_conda.sh
 
+# Something below tries to uninstall certifi
+# Uninstall here as root to prevent permission error.
+RUN python -m pip uninstall -y certifi
+
 USER $NB_USER
 
 COPY requirements.txt /tmp/requirements.txt
