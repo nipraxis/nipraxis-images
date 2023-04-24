@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:latest
+FROM jupyter/base-notebook:2022-05-05
 # Built from... https://hub.docker.com/r/jupyter/base-notebook/
 #               https://github.com/jupyter/docker-stacks/blob/HEAD/base-notebook/Dockerfile
 # Built from... Ubuntu 20.04
@@ -12,28 +12,18 @@ FROM jupyter/base-notebook:latest
 USER root
 RUN apt-get update \
  && apt-get upgrade -y \
- && apt-get install -y curl \
- && curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
- && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null \
- && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list \
- && apt update \
  && apt-get install -y --no-install-recommends \
         dnsutils \
         git \
         iputils-ping \
-        nodejs \
-        yarn \
-        gcc \
-        g++ \
-        make \
-        pkg-config \
-        libsecret-1-dev \
+        vim-nox \
+        nano \
+        jed \
+        ne \
+        less \
+        zip \
+        unzip \
  && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /opt/theia/bin
-COPY package.json /opt/theia/package.json
-COPY theia-bin /opt/theia/bin/theia
-RUN cd /opt/theia && yarn && yarn theia build
 
 USER $NB_USER
 
@@ -51,18 +41,13 @@ RUN if [[ -n "$PIP_OVERRIDES" ]]; then \
 RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
 RUN jupyter serverextension enable --py jupyter_server_proxy --sys-prefix
 
-RUN ls
-
-RUN cd /tmp \
-  && git clone https://github.com/matthew-brett/jupyter-server-proxy \
-  && cd jupyter-server-proxy \
-  && git checkout theia-futz \
-  && cd contrib/theia \
-  && pip install .
-
 # Uncomment the line below to make nbgitpuller default to start up in JupyterLab
 #ENV NBGITPULLER_APP=lab
 
-ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
+USER $NB_USER
 
 # conda/pip/apt install additional packages here, if desired.
+
+WORKDIR $HOME
+
+ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
