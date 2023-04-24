@@ -15,7 +15,7 @@ nibabel
 jupytext
 okpy
 dipy
-fury<0.8  # pacify dipy imports
+fury
 scikit-image
 sympy
 nipraxis>=0.3.6
