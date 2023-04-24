@@ -3,10 +3,10 @@
 # https://jupyterhub.github.io/helm-chart/#development-releases-jupyterhub
 # for the corresponding jupyterhub release - e.g. 2.1.1.
 # Make sure that version matches below.
-# To match helm chart: 1.1.3-n357.h3a348ab0
+# To match helm chart: 1.1.3-n493.hd30f34b1
 
-jupyterhub==2.2.1
-nbgitpuller==1.0.2
+jupyterhub==2.3.0
+nbgitpuller==1.1.0
 
 scipy
 matplotlib
@@ -15,8 +15,10 @@ nibabel
 jupytext
 okpy
 dipy
-fury<0.8  # pacify dipy imports
+fury
 scikit-image
-nipraxis>=0.3.2
+sympy
+nipraxis>=0.3.6
+pytest
 
 jupyter-server-proxy

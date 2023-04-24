@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:latest
+FROM jupyter/base-notebook:2022-05-05
 # Built from... https://hub.docker.com/r/jupyter/base-notebook/
 #               https://github.com/jupyter/docker-stacks/blob/HEAD/base-notebook/Dockerfile
 # Built from... Ubuntu 20.04
@@ -25,6 +25,10 @@ RUN apt-get update \
 
 COPY build_scripts/install_node_conda.sh /build_scripts/
 RUN /build_scripts/install_node_conda.sh
+
+# Something below tries to uninstall certifi
+# Uninstall here as root to prevent permission error.
+RUN python -m pip uninstall -y certifi
 
 USER $NB_USER
 
@@ -71,5 +75,3 @@ ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 WORKDIR $HOME
 
 ENV NIPRAXIS_STAGING_CACHE=/home/$NB_USER/shared/data
-
-RUN pip install -U nipraxis
