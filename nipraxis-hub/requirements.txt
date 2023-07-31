@@ -18,7 +18,7 @@ dipy
 fury
 scikit-image
 sympy
-nipraxis>=0.3.6
+nipraxis>=0.4
 pytest
 # https://github.com/mwouts/jupytext/issues/1051
 nbclassic>=0.5.5
